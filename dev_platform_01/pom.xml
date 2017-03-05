@@ -29,6 +29,23 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-cassandra</artifactId>
 		</dependency>
+
+   <!---- Hadoop spring dependency -->
+		<dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-hadoop</artifactId>
+    </dependency>
+
+
+ <!----- Security Application --> 
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+    </dependency>
+
+
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
