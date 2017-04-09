@@ -1,7 +1,8 @@
 'use strict';
 
 const Hapi = require('hapi');
-
+const Path = require('path'); 
+const Inert = require('inert');
 const server = new Hapi.Server();
 
 
@@ -13,9 +14,9 @@ server.register(require('inert'), (err) => {
 
     server.route({
         method: 'GET',
-        path: '/code_base',
+        path: '/',
         handler: function (request, reply) {
-            reply.file('./home/entercloud/code_base/index.html');
+            reply.file('/home/entercloud/entercloud-jvm/code/index.html');
         }
     });
 });
