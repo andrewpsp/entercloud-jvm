@@ -3,6 +3,10 @@
 const Hapi = require('hapi');
 const Path = require('path'); 
 const Inert = require('inert');
+const Boom = require('boom');
+const glob = require('glob');
+const secret = require('./config');
+const mongoose = require('mongoose');
 const server = new Hapi.Server();
 
 
