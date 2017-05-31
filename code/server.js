@@ -11,15 +11,14 @@ const mongoose = require('mongoose');
 const server = new Hapi.Server();
 
 const dbUrl = 'mongodb://0.0.0.0:27017/hapi-app'; 
-
-server.register(reguire('hapi-auth-jwt'), (err) => { 
+//server.register(reguire('hapi-auth-jwt'), (err) => { 
 
 // strategy both a name 
 // scheme of 'jwt' 
-server.auth.strategy('jwt', 'jwt', { 
-   key: secret, 
-   verifyOptions: { algorithms: ['HS256'] }
-});
+//server.auth.strategy('jwt', 'jwt', { 
+//   key: secret, 
+//   verifyOptions: { algorithms: ['HS256'] }
+// });  --
 
 // look through the routes in subdirectories of api and create new route for each
 glob.sync('api/**/routes/*.js', {
@@ -30,40 +29,34 @@ glob.sync('api/**/routes/*.js', {
   });
 }); 
 
-server.register(require('inert'), (err) => {boar
-
-    if (err) {
-        throw err;
-    }
-
-
+server.register(require('inert'),
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            reply.file('/public/entercloud/index.html'); 
+            reply.file('/var/www/html/index.html'); 
             /*reply.file('/home/entercloud/entercloud-jvm/code/index.html'); */ 
         }
         
-        method: 'GET',
-        path: '/start',
-        handler: function (request, reply) {
-            reply.file('/public/entercloud/entercloud_landing/index.html'); 
-        }
+       // method: 'GET',
+        //path: '/start',
+       // handler: function (request, reply) {
+       //     reply.file('/public/entercloud/entercloud_landing/index.html'); 
+       // }
     
-        method: 'GET',
-        path: '/dashboard',
-        handler: function (request, reply) {
-            reply.file('/public/entercloud/entercloud_dashboard/index.html'); 
-        }
+       // method: 'GET',
+       // path: '/dashboard',
+       // handler: function (request, reply) {
+       //     reply.file('/public/entercloud/entercloud_dashboard/index.html'); 
+       // }
                                             
       
-        method: 'GET',
-        path: '/{param*}',
-        handler: {
-          directory: {
-            path: 'public'
-        }
-    }
+       // method: 'GET',
+       // path: '/{param*}',
+       // handler: {
+       //   directory: {
+       //     path: 'public'
+      //v  }
+    //}
                                             
     });
 });
