@@ -1,12 +1,14 @@
 'use strict';
 
+const Path = require('path');
 const Hapi = require('hapi');
-const Path = require('path'); 
 const Inert = require('inert');
-const Boom = require('boom');
-const glob = require('glob');
-const secret = require('./config');
-const mongoose = require('mongoose');
+//const Path = require('path'); 
+//const Inert = require('inert');
+//const Boom = require('boom');
+//const glob = require('glob');
+//const secret = require('./config');
+//const mongoose = require('mongoose');
 
 const server = new Hapi.Server() ({
     connections: {
@@ -18,7 +20,7 @@ const server = new Hapi.Server() ({
     }
   });
 
-const dbUrl = 'mongodb://0.0.0.0:27017/hapi-app'; 
+// const dbUrl = 'mongodb://0.0.0.0:27017/hapi-app'; 
 //server.register(reguire('hapi-auth-jwt'), (err) => { 
 
 // strategy both a name 
@@ -36,17 +38,18 @@ const dbUrl = 'mongodb://0.0.0.0:27017/hapi-app';
 //  server.route(route);
 //  });
 // }); 
-
-server.register(require('inert'), function(err){
-  if (err)
-    throw err; 
-}
+server.connection({ port: 3000, host: '0.0.0.0' });
+server.register('inert'), ()=>{};
                 
 server.route({
         method: 'GET',
         path: '/{param*}',
         handler: 
-                function (request, reply) {reply.file('/var/www/html/index.html');
+    directory: {
+            path: '/var/www/html',
+            redirectToSlash: true,
+            index: true
+                function (request, reply) {reply.file('index.html');
                                           }
 )};
         
@@ -74,7 +77,7 @@ server.route({
     });
 });
 
-server.connection({ port: 3000, host: '0.0.0.0' });
+
 
 server.start((err) => {
 
@@ -82,7 +85,7 @@ server.start((err) => {
         throw err;
     }
  // once started, connect to mongo through mongoose
-    mongoose.connect(dbUrl, {}, (err) => { 
+    //mongoose.connect(dbUrl, {}, (err) => { 
     console.log(`server on gofundme.com/entercloud
     	${server.info.uri}`);
 });
