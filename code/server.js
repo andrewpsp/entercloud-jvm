@@ -8,7 +8,15 @@ const glob = require('glob');
 const secret = require('./config');
 const mongoose = require('mongoose');
 
-const server = new Hapi.Server();
+const server = new Hapi.Server() ({
+    connections: {
+        routes: {
+            files: {
+                relativeTo: Path.join(__dirname, 'wwww')
+            }
+        }
+    }
+  });
 
 const dbUrl = 'mongodb://0.0.0.0:27017/hapi-app'; 
 //server.register(reguire('hapi-auth-jwt'), (err) => { 
@@ -21,21 +29,26 @@ const dbUrl = 'mongodb://0.0.0.0:27017/hapi-app';
 // });  --
 
 // look through the routes in subdirectories of api and create new route for each
-glob.sync('api/**/routes/*.js', {
-  root: _dirname
-}).forEach(file => { 
-  const route = require(path.join(_dirname, file)); 
-  server.route(route);
-  });
-}); 
+//glob.sync('api/**/routes/*.js', {
+//  root: _dirname
+// }).forEach(file => { 
+//  const route = require(path.join(_dirname, file)); 
+//  server.route(route);
+//  });
+// }); 
 
-server.register(require('inert'),
+server.register(require('inert'), function(err){
+  if (err)
+    throw err; 
+}
+                
+server.route({
         method: 'GET',
-        path: '/',
-        handler: function (request, reply) {
-            reply.file('/var/www/html/index.html'); 
-            /*reply.file('/home/entercloud/entercloud-jvm/code/index.html'); */ 
-        }
+        path: '/{param*}',
+        handler: 
+                function (request, reply) {reply.file('/var/www/html/index.html');
+                                          }
+)};
         
        // method: 'GET',
         //path: '/start',
